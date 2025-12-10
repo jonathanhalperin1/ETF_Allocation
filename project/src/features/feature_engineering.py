@@ -75,7 +75,7 @@ def get_feature_names(etf_tickers):
         ])
     
     features.extend(["vix", "yield_slope", "yield_trend"])
-   
+    
     return features
 
 

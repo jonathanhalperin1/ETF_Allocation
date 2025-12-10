@@ -1,0 +1,17 @@
+project.ipynb - Jupyter notebook demonstrating PPO portfolio allocation with pre-trained model and sample data
+project.html - HTML export of the notebook with all outputs
+src/ - Directory containing all Python source code modules
+src/main.py - Main pipeline orchestrator script
+src/data/download_data.py - Data acquisition from Yahoo Finance and FRED
+src/features/feature_engineering.py - Feature extraction and preprocessing
+src/training/train_ppo.py - PPO model training implementation
+src/backtest/backtest_agent.py - Backtesting functionality for trained models
+src/backtest/evaluate_metrics.py - Performance metrics and baseline strategies
+src/env/portfolio_env.py - Gymnasium environment for portfolio trading
+data/etf_prices.csv - ETF price data (SPY, QQQ, TLT, GLD, SHV)
+data/vix.csv - VIX volatility index data
+data/yield_curve.csv - Yield curve data from FRED
+models/ppo_portfolio.zip - Pre-trained PPO model for portfolio allocation
+report/strategy_comparison.csv - Performance comparison results
+report/strategy_equity_curves.csv - Portfolio value time series for all strategies
+
