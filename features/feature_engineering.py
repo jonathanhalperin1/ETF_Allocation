@@ -5,18 +5,15 @@ def compute_momentum(data, window=20):
     return data.pct_change(window)
 
 def compute_volatility(data, window=20):
-    
     returns = data.pct_change()
     return returns.rolling(window).std()
 
 def compute_drawdown(data, window=252):
-    
     rolling_max = data.rolling(window).max()
     drawdown = (data - rolling_max) / rolling_max
     return drawdown
 
 def normalize_series(series):
-    
     mean = series.mean()
     std = series.std()
     if std == 0:
@@ -24,7 +21,6 @@ def normalize_series(series):
     return (series - mean) / std
 
 def compute_all_features(etf_data, vix_data, yield_curve_data, lookback_window=252):
-    
     all_data = pd.DataFrame(index=etf_data.index)
     for ticker in etf_data.columns:
         all_data[ticker] = etf_data[ticker]
@@ -69,7 +65,6 @@ def compute_all_features(etf_data, vix_data, yield_curve_data, lookback_window=2
     return all_data
 
 def get_feature_names(etf_tickers):
-    
     features = []
     
     for ticker in etf_tickers:
@@ -81,7 +76,6 @@ def get_feature_names(etf_tickers):
     
     features.extend(["vix", "yield_slope", "yield_trend"])
     
-   
     return features
 
 

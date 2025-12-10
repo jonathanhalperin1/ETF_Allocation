@@ -16,7 +16,6 @@ def download_vix(start_date, end_date, output_path="data/vix.csv"):
     return vix
 
 def download_yield_curve(start_date, end_date, output_path="data/yield_curve.csv"):
-
     print("Downloading yield curve data from FRED...")
     try:
         ten_year = web.DataReader("DGS10", "fred", start_date, end_date)
