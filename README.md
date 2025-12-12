@@ -6,7 +6,6 @@ Reinforcement learning portfolio allocation using Proximal Policy Optimization (
 Installation
 ------------
 git clone <repository-url>
-cd JohnnyEtf
 
 python3 -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
