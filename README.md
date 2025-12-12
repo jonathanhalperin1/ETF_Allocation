@@ -52,24 +52,18 @@ Each file should have a date index.
 
 Project Structure
 -----------------
-JohnnyEtf/
-├── main.py                  # Full pipeline
-├── project.ipynb            # Jupyter notebook demo
-├── data/
-│   ├── download_data.py     # Data download
-│   └── *.csv                # Stored data
-├── features/
-│   └── feature_engineering.py
-├── training/
-│   └── train_ppo.py         # PPO training script
-├── backtest/
-│   ├── backtest_agent.py    # Backtest trained model
-│   └── evaluate_metrics.py  # Metrics and comparisons
-├── env/
-│   └── portfolio_env.py     # Gymnasium environment
-├── models/                  # Saved PPO models
-├── report/                  # Generated results
-└── requirements.txt
+- `main.py` - Full pipeline script that downloads data, trains model, backtests, and compares strategies
+- `project.ipynb` - Interactive Jupyter notebook demonstrating the trained PPO agent with visualizations
+- `data/download_data.py` - Downloads ETF prices, VIX, and yield curve data from Yahoo Finance and FRED
+- `data/*.csv` - Stored historical data files (ETF prices, VIX, yield curve)
+- `features/feature_engineering.py` - Computes momentum, volatility, drawdown, and macro features for the RL agent
+- `training/train_ppo.py` - Standalone script to train the PPO model using rolling-window strategy
+- `backtest/backtest_agent.py` - Standalone script to backtest a trained PPO model on test period
+- `backtest/evaluate_metrics.py` - Computes performance metrics and implements baseline strategies (buy-and-hold, monthly rebalance)
+- `env/portfolio_env.py` - Custom Gymnasium environment for portfolio allocation with reward function
+- `models/` - Directory containing saved trained PPO models (`.zip` files)
+- `report/` - Directory containing generated results (CSV files with metrics and equity curves)
+- `requirements.txt` - Python package dependencies
 
 Running Individual Components
 ------------------------------
