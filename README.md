@@ -10,7 +10,6 @@ cd JohnnyEtf
 
 python3 -m venv venv
 source venv/bin/activate        # On Windows: venv\Scripts\activate
-s
 pip install -r requirements.txt
 
 Quick Start (Full Pipeline)
@@ -56,6 +55,7 @@ Project Structure
 -----------------
 JohnnyEtf/
 ├── main.py                  # Full pipeline
+├── project.ipynb            # Jupyter notebook demo
 ├── data/
 │   ├── download_data.py     # Data download
 │   └── *.csv                # Stored data
@@ -72,15 +72,78 @@ JohnnyEtf/
 ├── report/                  # Generated results
 └── requirements.txt
 
-Individual Components
----------------------
-Train PPO only:
+Running Individual Components
+------------------------------
 
+1. Training the PPO Model
+-------------------------
+To train the PPO model from scratch:
+
+```bash
 python training/train_ppo.py
+```
 
-Backtest an existing model:
+This script will:
+- Load data from `data/` directory (downloads if missing)
+- Compute features for all available data
+- Split data: train on 2010-2018, reserve 2019-2022 for testing
+- Train PPO using rolling-window strategy (50 windows of 90 days each)
+- Save trained model to `models/ppo_portfolio.zip`
 
+Training parameters can be modified in `training/train_ppo.py`:
+- `window_size`: Size of each training window (default: 90 days)
+- `n_windows`: Number of random windows to train on (default: 50)
+- `timesteps_per_window`: Training steps per window (default: 5000)
+
+Expected time: ~30-60 minutes depending on hardware.
+
+2. Evaluating/Backtesting the Model
+------------------------------------
+To backtest a trained model:
+
+```bash
 python backtest/backtest_agent.py
+```
+
+This script will:
+- Load the trained model from `models/ppo_portfolio.zip`
+- Load data and compute features
+- Backtest on the test period (2019-2022 by default)
+- Print performance metrics (returns, Sharpe ratio, drawdown, etc.)
+
+**Note**: A trained model must exist first. If `models/ppo_portfolio.zip` doesn't exist, run training first or use `main.py` which handles the full pipeline.
+
+You can modify the backtest period by editing the `start_date` and `end_date` parameters in `backtest/backtest_agent.py`.
+
+3. Running the Jupyter Notebook
+---------------------------------
+To use the interactive notebook:
+
+```bash
+# Make sure Jupyter is installed
+pip install jupyter
+
+# Start Jupyter
+jupyter notebook project.ipynb
+```
+
+Or if using JupyterLab:
+```bash
+pip install jupyterlab
+jupyter lab project.ipynb
+```
+
+The notebook (`project.ipynb`) provides:
+- Interactive visualization of portfolio performance
+- Step-by-step demonstration of the backtesting process
+- Comparison of PPO agent vs baseline strategies
+- Visual equity curve plots
+
+**Prerequisites for notebook**:
+- A trained model must exist at `models/ppo_portfolio.zip`
+- Data files must be present in `data/` directory
+
+**Note**: The notebook uses `%matplotlib inline` for inline plots. If you prefer interactive plots, you can change this to `%matplotlib widget` (requires `ipympl`).
 
 Requirements
 ------------
@@ -101,8 +164,14 @@ Data download errors:
 - Confirm Yahoo Finance and FRED are reachable
 
 Training too slow:
-- In main.py, reduce n_windows
-- Reduce ``timesteps_per_window
+- In `training/train_ppo.py`, reduce `n_windows` (default: 50)
+- Reduce `timesteps_per_window` (default: 5000)
+- Reduce `window_size` (default: 90 days)
+
+Notebook won't run:
+- Ensure model exists: `models/ppo_portfolio.zip`
+- Check that data files exist in `data/` directory
+- Verify all imports work: run `python -c "from features.feature_engineering import compute_all_features"`
 
 Contact
 -------
