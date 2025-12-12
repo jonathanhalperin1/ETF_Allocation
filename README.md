@@ -172,6 +172,4 @@ Notebook won't run:
 - Check that data files exist in `data/` directory
 - Verify all imports work: run `python -c "from features.feature_engineering import compute_all_features"`
 
-Contact
--------
-Open an issue in this repository for questions or problems.
+
